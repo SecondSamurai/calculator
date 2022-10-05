@@ -18,10 +18,6 @@ function calculator(string $str): string
     if ($str[0] === '+' || $str[0] === '-')
         return 'Plus or minus at the beginning of the line !';
 
-    if (preg_match("/[^0-9]/", $str)) {
-        return 'error';
-    }    
-
     for ($i = 0; $i < strlen($str); $i++) {
         if ($str[$i] !== '+' && $str[$i] !== '-') {
             $arrayNumbers[$numbersCount] .= $str[$i];
