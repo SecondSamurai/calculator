@@ -2,49 +2,52 @@
 
 $str = '1 + 10000 - 9999 + 4';
 
-$strEndSolution = '';
 $strEndSolution = calculator($str);
 echo $strEndSolution;
 
-function calculator(string $str)
+function calculator(string $str): string
 {
     $solution = 0;
-    $arrNumb = [];
-    $arrOp = [];
-    $nCount = 0;
-    $opCount = 0;
+    $arrayNumbers = [];
+    $arrayOperations = [];
+    $numbersCount = 0;
+    $operationsCount = 0;
 
     echo "Example to solve : " . $str . "\n";
 
     if ($str[0] === '+' || $str[0] === '-')
         return 'Plus or minus at the beginning of the line !';
 
+    if (preg_match("/[^0-9]/", $str)) {
+        return 'error';
+    }    
+
     for ($i = 0; $i < strlen($str); $i++) {
         if ($str[$i] !== '+' && $str[$i] !== '-') {
-            $arrNumb[$nCount] .= $str[$i];
+            $arrayNumbers[$numbersCount] .= $str[$i];
         } else {
             if ($str[$i] === '+')
-                $arrOp[$opCount] = '+';
+                $arrayOperations[$operationsCount] = '+';
 
             if ($str[$i] === '-')
-                $arrOp[$opCount] = '-';
+                $arrayOperations[$operationsCount] = '-';
 
-            $opCount++;
-            $nCount++;
+            $operationsCount++;
+            $numbersCount++;
         }
     }
 
-    if ($nCount >= 5)
+    if ($numbersCount >= 5)
         return 'There is too much elements in the line !';
 
-    $solution = $arrNumb[0];
+    $solution = $arrayNumbers[0];
 
     for ($i = 1, $k = 0; $i < 5; $i++) {
-        if ($arrOp[$k] === '+')
-            $solution += $arrNumb[$i];
+        if ($arrayOperations[$k] === '+')
+            $solution += $arrayNumbers[$i];
 
-        elseif ($arrOp[$k] === '-')
-            $solution -= $arrNumb[$i];
+        elseif ($arrayOperations[$k] === '-')
+            $solution -= $arrayNumbers[$i];
 
         $k++;
     }
